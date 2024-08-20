@@ -133,10 +133,11 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
-        "level": vuln['Severity'],
-        "stacks": {
-            "items": vuln['StackTrace'].split('\n  ')
+        "level": "error",
+        "properties": {
+            "severity": vuln['Severity']
         },
+        "stacks": vuln['StackTrace'].split('\n  '),
         "occurrenceCount": vuln['DetectionCount'],
         "hostedViewerUri": vuln['SeekerServerLink'],
         "webRequest": {
@@ -158,7 +159,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         ]
     }
     if len(code_location) > 1:
-        sariff['locations'][0]['physicalLocation']['region'] = {"startLine": code_location[1]}
+        sariff['locations'][0]['physicalLocation']['region'] = {"startLine": int(code_location[1])}
 
     #TODO: webrequest
     #TODO: triage / status
