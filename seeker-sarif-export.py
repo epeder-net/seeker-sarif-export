@@ -136,7 +136,8 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         stack_frames.append({"module": frame})
     sariff = {
         "message": {
-            "text": cleanhtml(vuln['Summary'])
+            #"text": cleanhtml(vuln['Summary'])
+            "text": vuln['VulnerabilityName']
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
