@@ -25,9 +25,10 @@ jobs:
         pylint $(git ls-files '*.py')
     - name: Seeker export Sarif
         run: |
-         python ${{ env.DEVOPS_DIR }}/seeker-sarif-export.py #--project benchmark --url http://192.168.1.61:8080 --token ${{secret.seeker_token}}
+         python seeker-sarif-export.py -h
       - name: Upload SARIF file
           uses: github/codeql-action/upload-sarif@v3
           with:
+            #--project benchmark --url http://192.168.1.61:8080 --token ${{secret.seeker_token}}
             # Path to SARIF file relative to the root of the repository
             sarif_file: benchmark.sarif
