@@ -24,8 +24,8 @@ jobs:
       run: |
         pylint $(git ls-files '*.py')
     - name: Seeker export Sarif
-        run: |
-         python seeker-sarif-export.py -h
+      run: |
+        python seeker-sarif-export.py -h
       - name: Upload SARIF file
           uses: github/codeql-action/upload-sarif@v3
           with:
