@@ -116,12 +116,10 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             "id": vuln['CheckerKey'],
             "name": vuln['VulnerabilityName'],
             "shortDescription": {
-                "text": cleanhtml(vuln['Summary']),
-                "markdown": md(vuln['Summary'])
+                "text": vuln['VulnerabilityName']
             },
             "fullDescription": {
-                "text": cleanhtml(vuln['Description']),
-                "markdown": md(vuln['Description'])
+                "text": cleanhtml(vuln['Description'])
             },
             "help": {
                 "text": cleanhtml(vuln['Summary']),
@@ -134,6 +132,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
               },
             "properties": {
                 "security-severity": convert_severity(vuln['Severity']),
+                "problem.severity": "error",
                 "OWASP2013": vuln['OWASP2013'],
                 "PCI-DSS": vuln['PCI-DSS'],
                 "CWE-SANS": vuln['CWE-SANS'],
@@ -164,7 +163,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
-        "level": "error",
+        #"level": "error",
         "properties": {
             "severity": vuln['Severity'],
             "CodeLocationType": vuln['CodeLocationType'],
