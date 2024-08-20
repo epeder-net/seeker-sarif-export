@@ -119,6 +119,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
                 }
               },
             "properties": {
+                "security-severity": vuln['Severity'],
                 "OWASP2013": vuln['OWASP2013'],
                 "PCI-DSS": vuln['PCI-DSS'],
                 "CWE-SANS": vuln['CWE-SANS'],
