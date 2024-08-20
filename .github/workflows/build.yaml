@@ -6,6 +6,9 @@ jobs:
   build:
     #runs-on: ubuntu-latest
     runs-on: self-hosted
+    permissions:
+      # required for all workflows
+      security-events: write
     strategy:
       matrix:
         python-version: ["3.10"]

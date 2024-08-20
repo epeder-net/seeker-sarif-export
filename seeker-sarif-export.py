@@ -187,7 +187,7 @@ def main():
     # export to file
     logging.info("Creating SARIF file.")
     sarif_file = create_sarif_file(sarif, artifacts, rules)
-    with open("{0}-sarif.sarif".format(args.project), 'w') as f:
+    with open("{0}.sarif".format(args.project), 'w') as f:
         f.write(json.dumps(sarif_file, indent=2))
     logging.info("Done.")
 
