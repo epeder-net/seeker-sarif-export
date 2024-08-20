@@ -104,8 +104,12 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         rules[vuln['CheckerKey']] = {
             "id": vuln['CheckerKey'],
             "name": vuln['VulnerabilityName'],
-            "shortDescription": cleanhtml(vuln['Summary']),
-            "fullDescription": cleanhtml(vuln['Description']),
+            "shortDescription": {
+                "text": cleanhtml(vuln['Summary'])
+            },
+            "fullDescription": {
+                "text": cleanhtml(vuln['Description'])
+            },
             "messageStrings": {
                 "default": {
                   "text": cleanhtml(vuln['Description'])
