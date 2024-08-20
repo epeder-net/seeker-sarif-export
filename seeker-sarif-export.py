@@ -82,7 +82,7 @@ def cleanhtml(raw_html):
   return cleantext
 
 def convert_to_sarif_results(vuln, artifacts, rules):
-    #logging.info(json.dumps(vuln, indent=2))
+    logging.info(json.dumps(vuln, indent=2))
     code_location = vuln['CodeLocation'].split(':')
     if not code_location[0] in artifacts:
         artifacts[code_location[0]] = {
@@ -126,6 +126,9 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     for param_item in vuln['LastDetectionHttpParams']:
         param_item = header.split(': ')
         params[param_item[0]] = param_item[1]
+    stack_frames = []
+    for frame in vuln['StackTrace'].split('\n  '):
+        stack_frames.append({"module": frame})
     sariff = {
         "message": {
             "text": cleanhtml(vuln['Summary']),
@@ -135,9 +138,20 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         "ruleIndex": rule_index,
         "level": "error",
         "properties": {
-            "severity": vuln['Severity']
+            "severity": vuln['Severity'],
+            "CodeLocationType": vuln['CodeLocationType'],
+            "LastDetectionCodeLocation": vuln['LastDetectionCodeLocation'],
+            "LastDetectionSourceName": vuln['LastDetectionSourceName'],
+            "LastDetectionSourceType": vuln['LastDetectionSourceType'],
+            "Status": vuln['Status'],
+            "VerificationTag": vuln['VerificationTag'],
+            "VulnerabilityName": vuln['VulnerabilityName']
         },
-        "stacks": vuln['StackTrace'].split('\n  '),
+        "stacks": [
+            {
+                "frames": stack_frames,
+            }
+        ],
         "occurrenceCount": vuln['DetectionCount'],
         "hostedViewerUri": vuln['SeekerServerLink'],
         "webRequest": {
