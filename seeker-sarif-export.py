@@ -86,7 +86,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     if ':' in vuln['CodeLocation']:
         code_location = vuln['CodeLocation'].split(':')
     else:
-        code_location = [vuln['CodeLocation'], 0]
+        code_location = [vuln['CodeLocation'], 1]
     if code_location[0] == "":
         code_location[0] = vuln['LastDetectionCodeLocation']
     if not code_location[0] in artifacts:
