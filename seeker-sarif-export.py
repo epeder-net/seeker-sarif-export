@@ -111,7 +111,11 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             },
             "fullDescription": {
                 "text": cleanhtml(vuln['Description']),
-                "markdown": md(vuln['description'])
+                "markdown": md(vuln['Description'])
+            },
+            "help": {
+                "text": cleanhtml(vuln['Summary']),
+                "markdown": md(vuln['Summary'])
             },
             "messageStrings": {
                 "default": {
