@@ -137,7 +137,8 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     sariff = {
         "message": {
             #"text": cleanhtml(vuln['Summary'])
-            "text": vuln['VulnerabilityName']
+            "text": vuln['VulnerabilityName'],
+            "markdown": "#{0}\n\n{1}".format(vuln['VulnerabilityName'], vuln['Summary'])
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
