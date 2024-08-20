@@ -82,6 +82,15 @@ def cleanhtml(raw_html):
   cleantext = re.sub(cleanr, '', raw_html)
   return cleantext
 
+def convert_severity(severity):
+    if severity == "Critical":
+        return 9.5
+    elif severity == "High":
+        return 8.0
+    elif severity == "Medium":
+        return 5.0
+    elif severity == "Low":
+        return 3.0
 def convert_to_sarif_results(vuln, artifacts, rules):
     #logging.info(json.dumps(vuln, indent=2))
     if ':' in vuln['CodeLocation']:
@@ -123,7 +132,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
                 }
               },
             "properties": {
-                "security-severity": vuln['Severity'],
+                "security-severity": convert_severity(vuln['Severity']),
                 "OWASP2013": vuln['OWASP2013'],
                 "PCI-DSS": vuln['PCI-DSS'],
                 "CWE-SANS": vuln['CWE-SANS'],
