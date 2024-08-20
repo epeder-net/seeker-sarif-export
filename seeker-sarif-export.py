@@ -84,13 +84,14 @@ def cleanhtml(raw_html):
 
 def convert_severity(severity):
     if severity == "Critical":
-        return 9.5
+        return "9.5"
     elif severity == "High":
-        return 8.0
+        return "8.0"
     elif severity == "Medium":
-        return 5.0
+        return "5.0"
     elif severity == "Low":
-        return 3.0
+        return "3.0"
+    
 def convert_to_sarif_results(vuln, artifacts, rules):
     #logging.info(json.dumps(vuln, indent=2))
     if ':' in vuln['CodeLocation']:
