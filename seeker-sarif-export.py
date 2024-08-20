@@ -82,8 +82,13 @@ def cleanhtml(raw_html):
   return cleantext
 
 def convert_to_sarif_results(vuln, artifacts, rules):
-    logging.info(json.dumps(vuln, indent=2))
-    code_location = vuln['CodeLocation'].split(':')
+    #logging.info(json.dumps(vuln, indent=2))
+    if ':' in vuln['CodeLocation']:
+        code_location = vuln['CodeLocation'].split(':')
+    else:
+        code_location = [vuln['CodeLocation'], 0]
+    if code_location[0] == "":
+        code_location[0] = vuln['LastDetectionCodeLocation']
     if not code_location[0] in artifacts:
         artifacts[code_location[0]] = {
           "location": {
@@ -114,6 +119,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
                 "OWASPAPI2019": vuln['OWASPAPI2019'],
                 "OWASPAPI2023": vuln['OWASPAPI2023'],
                 "OWASP2021": vuln['OWASP2021'],
+                "CodeLocation": vuln['CodeLocation']
               }
         }
     code_index = list(artifacts.keys()).index(code_location[0])
