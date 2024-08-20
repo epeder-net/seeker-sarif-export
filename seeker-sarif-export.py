@@ -3,6 +3,7 @@ import logging
 import json
 import argparse
 import re
+from markdownify import markdownify as md
 
 logging.basicConfig(format='%(asctime)s:%(levelname)s %(message)s', level=logging.INFO)
 
@@ -105,10 +106,12 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             "id": vuln['CheckerKey'],
             "name": vuln['VulnerabilityName'],
             "shortDescription": {
-                "text": (vuln['Summary'])
+                "text": cleanhtml(vuln['Summary']),
+                "markdown": md(vuln['Summary'])
             },
             "fullDescription": {
-                "text": (vuln['Description'])
+                "text": cleanhtml(vuln['Description']),
+                "markdown": md(vuln['description'])
             },
             "messageStrings": {
                 "default": {
