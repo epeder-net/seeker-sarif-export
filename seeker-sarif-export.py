@@ -105,8 +105,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             "id": vuln['CheckerKey'],
             "messageStrings": {
                 "default": {
-                  "text": cleanhtml(vuln['Description']),
-                  "markdown": vuln['Description']
+                  "text": cleanhtml(vuln['Description'])
                 }
               },
             "properties": {
@@ -137,8 +136,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         stack_frames.append({"module": frame})
     sariff = {
         "message": {
-            "text": cleanhtml(vuln['Summary']),
-            "markdown": vuln['Summary']
+            "text": cleanhtml(vuln['Summary'])
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
