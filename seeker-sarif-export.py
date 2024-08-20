@@ -105,10 +105,10 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             "id": vuln['CheckerKey'],
             "name": vuln['VulnerabilityName'],
             "shortDescription": {
-                "text": cleanhtml(vuln['Summary'])
+                "text": cleanhtml(vuln['VulnerabilityName'])
             },
             "fullDescription": {
-                "text": cleanhtml(vuln['Description'])
+                "text": cleanhtml(vuln['Summary'] + " \n\n" + cleanhtml(vuln['Description']))
             },
             "messageStrings": {
                 "default": {
@@ -124,8 +124,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
                 "CAPEC": vuln['CAPEC'],
                 "OWASPAPI2019": vuln['OWASPAPI2019'],
                 "OWASPAPI2023": vuln['OWASPAPI2023'],
-                "OWASP2021": vuln['OWASP2021'],
-                "CodeLocation": vuln['CodeLocation']
+                "OWASP2021": vuln['OWASP2021']
               }
         }
     code_index = list(artifacts.keys()).index(code_location[0])
@@ -156,7 +155,8 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             "LastDetectionSourceType": vuln['LastDetectionSourceType'],
             "Status": vuln['Status'],
             "VerificationTag": vuln['VerificationTag'],
-            "VulnerabilityName": vuln['VulnerabilityName']
+            "VulnerabilityName": vuln['VulnerabilityName'],
+            "CodeLocation": vuln['CodeLocation']
         },
         "stacks": [
             {
