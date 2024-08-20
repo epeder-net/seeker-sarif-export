@@ -1,0 +1,24 @@
+name: Create Sarif and Import
+
+on:
+  push:
+    branches: [master, main]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+      steps:
+    - uses: actions/checkout@v2
+    
+    - name: Seeker export Sarif
+      run: python ${{ env.DEVOPS_DIR }}/seeker-sarif-export.py --project benchmark --url http://192.168.1.61:8080 --token ${{secret.seeker_token}}
+      shell: sh
+    - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: benchmark.sarif
+          # Optional category for the results
+          # Used to differentiate multiple results for one commit
+          category: my-analysis-too
