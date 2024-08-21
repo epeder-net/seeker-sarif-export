@@ -113,7 +113,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         }
     if not vuln['CheckerKey'] in rules:
         rules[vuln['CheckerKey']] = {
-            "id": "{0}-{1}".format(vuln['CheckerKey'], vuln['ItemKey']),
+            "id": vuln['ItemKey'],
             "name": vuln['VulnerabilityName'],
             "help": {
                 "text": vuln['Description'],
@@ -139,9 +139,9 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     #    stack_frames.append({"module": frame})
     sariff = {
         "message": {
-            "text": "{0} Seeker [Link]({1}). Details in the rule".format(vuln['VulnerabilityName'], vuln['SeekerServerLink']),
+            "text": "{0} [Seeker Link]({1}). Details in the rule".format(vuln['Description'], vuln['SeekerServerLink']),
         },
-        "ruleId": "{0}-{1}".format(vuln['CheckerKey'], vuln['ItemKey']),
+        "ruleId": vuln['ItemKey'],
         "ruleIndex": rule_index,
         "occurrenceCount": vuln['DetectionCount'],
         "hostedViewerUri": vuln['SeekerServerLink'],
