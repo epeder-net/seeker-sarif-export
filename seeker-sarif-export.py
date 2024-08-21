@@ -114,11 +114,6 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     if not vuln['CheckerKey'] in rules:
         rules[vuln['CheckerKey']] = {
             "id": vuln['CheckerKey'],
-            "messageStrings": {
-                "default": {
-                  "text": "Test '{0}'"
-                }
-              },
             "properties": {
                 "security-severity": convert_severity(vuln['Severity']),
                 "problem.severity": "error",
@@ -134,16 +129,12 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     for param_item in vuln['LastDetectionHttpParams']:
         param_item = header.split(': ')
         params[param_item[0]] = param_item[1]
-    stack_frames = []
-    for frame in vuln['StackTrace'].split('\n  '):
-        stack_frames.append({"module": frame})
+    #stack_frames = []
+    #for frame in vuln['StackTrace'].split('\n  '):
+    #    stack_frames.append({"module": frame})
     sariff = {
         "message": {
             "text": "{0} Seeker [Link]({1}). Details in the rule".format(vuln['VulnerabilityName'], vuln['SeekerServerLink']),
-            "id": "default",
-            "arguments": [
-                vuln['SeekerServerLink']
-            ]
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
