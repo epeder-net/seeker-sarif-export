@@ -67,7 +67,7 @@ def create_sarif_file(vulns, artifacts, rules):
             {
                 "tool": {
                     "driver": {
-                        "name": "Seeker",
+                        "name": "Seeker IAST",
                         "rules": rules_list
                     }
                 },
