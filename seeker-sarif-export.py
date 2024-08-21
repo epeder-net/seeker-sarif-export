@@ -114,10 +114,6 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     if not vuln['CheckerKey'] in rules:
         rules[vuln['CheckerKey']] = {
             "id": vuln['CheckerKey'],
-            "name": vuln['VulnerabilityName'],
-            "shortDescription": {
-                "text": vuln['VulnerabilityName']
-            },
             "messageStrings": {
                 "default": {
                   "text": "Test '{0}'"
