@@ -113,7 +113,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         }
     if not vuln['CheckerKey'] in rules:
         rules[vuln['CheckerKey']] = {
-            "id": vuln['ItemKey'],
+            "id": vuln['CheckerKey'],
             "name": vuln['VulnerabilityName'],
             "help": {
                 "text": vuln['Description'],
@@ -141,7 +141,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         "message": {
             "text": "{0} [Seeker Link]({1}). Details in the rule".format(vuln['Description'], vuln['SeekerServerLink']),
         },
-        "ruleId": vuln['ItemKey'],
+        "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
         "occurrenceCount": vuln['DetectionCount'],
         "hostedViewerUri": vuln['SeekerServerLink'],
@@ -153,13 +153,12 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         },
         "locations": [
             {
-            "physicalLocation": {
-                "artifactLocation": {
-                "uri": code_location[0],
-                    "index": code_index
-                },
-
-            }
+                "physicalLocation": {
+                    "artifactLocation": {
+                    "uri": code_location[0],
+                        "index": code_index
+                    },
+                }
             }
         ]
     }
