@@ -118,13 +118,6 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             "shortDescription": {
                 "text": vuln['VulnerabilityName']
             },
-            "fullDescription": {
-                "text": cleanhtml(vuln['Description'])
-            },
-            "help": {
-                "text": cleanhtml(vuln['Summary']),
-                "markdown": md(vuln['Summary'])
-            },
             "messageStrings": {
                 "default": {
                   "text": "Test '{0}'"
