@@ -113,7 +113,12 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         }
     if not vuln['CheckerKey'] in rules:
         rules[vuln['CheckerKey']] = {
-            "id": vuln['CheckerKey'],
+            "id": "{0}-{1}".format(vuln['CheckerKey'], vuln['ItemKey']),
+            "name": vuln['VulnerabilityName'],
+            "help": {
+                "text": vuln['Description'],
+                "markdown": "{0} [Seeker Link]({1})".format(md(vuln['Description']), vuln['SeekerServerLink'])
+            },
             "properties": {
                 "security-severity": convert_severity(vuln['Severity']),
                 "problem.severity": "error",
