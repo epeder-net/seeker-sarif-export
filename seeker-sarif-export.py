@@ -127,21 +127,12 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             },
             "messageStrings": {
                 "default": {
-                  "text": cleanhtml(vuln['Description'])
+                  "text": "Test '{0}"
                 }
               },
             "properties": {
                 "security-severity": convert_severity(vuln['Severity']),
                 "problem.severity": "error",
-                "OWASP2013": vuln['OWASP2013'],
-                "PCI-DSS": vuln['PCI-DSS'],
-                "CWE-SANS": vuln['CWE-SANS'],
-                "OWASP2017": vuln['OWASP2017'],
-                "GDPR": vuln['GDPR'],
-                "CAPEC": vuln['CAPEC'],
-                "OWASPAPI2019": vuln['OWASPAPI2019'],
-                "OWASPAPI2023": vuln['OWASPAPI2023'],
-                "OWASP2021": vuln['OWASP2021']
               }
         }
     code_index = list(artifacts.keys()).index(code_location[0])
@@ -159,22 +150,14 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         stack_frames.append({"module": frame})
     sariff = {
         "message": {
-            "text": vuln['VulnerabilityName']
+            "id": "default",
+            "arguments": [
+                vuln['SeekerServerLink']
+            ]
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
         #"level": "error",
-        "properties": {
-            "severity": vuln['Severity'],
-            "CodeLocationType": vuln['CodeLocationType'],
-            "LastDetectionCodeLocation": vuln['LastDetectionCodeLocation'],
-            "LastDetectionSourceName": vuln['LastDetectionSourceName'],
-            "LastDetectionSourceType": vuln['LastDetectionSourceType'],
-            "Status": vuln['Status'],
-            "VerificationTag": vuln['VerificationTag'],
-            "VulnerabilityName": vuln['VulnerabilityName'],
-            "CodeLocation": vuln['CodeLocation']
-        },
         "stacks": [
             {
                 "frames": stack_frames,
@@ -203,8 +186,6 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     if len(code_location) > 1:
         sariff['locations'][0]['physicalLocation']['region'] = {"startLine": int(code_location[1])}
 
-    #TODO: webrequest
-    #TODO: triage / status
     return sariff, artifacts, rules
 
 def main():
