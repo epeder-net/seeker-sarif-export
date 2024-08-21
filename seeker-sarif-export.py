@@ -141,7 +141,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         "message": {
             "text": "{0} Seeker [Link]({1}). Details in the rule".format(vuln['VulnerabilityName'], vuln['SeekerServerLink']),
         },
-        "ruleId": vuln['CheckerKey'],
+        "ruleId": "{0}-{1}".format(vuln['CheckerKey'], vuln['ItemKey']),
         "ruleIndex": rule_index,
         "occurrenceCount": vuln['DetectionCount'],
         "hostedViewerUri": vuln['SeekerServerLink'],
