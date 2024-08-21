@@ -67,7 +67,7 @@ def create_sarif_file(vulns, artifacts, rules):
             {
                 "tool": {
                     "driver": {
-                        "name": "Seeker",
+                        "name": "Seeker IAST",
                         "rules": rules_list
                     }
                 },
@@ -113,16 +113,12 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         }
     if not vuln['CheckerKey'] in rules:
         rules[vuln['CheckerKey']] = {
-            "id": vuln['CheckerKey'],
+            "id": "{0}-{1}".format(vuln['CheckerKey'], vuln['ItemKey']),
             "name": vuln['VulnerabilityName'],
-            "shortDescription": {
-                "text": vuln['VulnerabilityName']
+            "help": {
+                "text": vuln['Description'],
+                "markdown": "{0} [Seeker Link]({1})".format(md(vuln['Description']), vuln['SeekerServerLink'])
             },
-            "messageStrings": {
-                "default": {
-                  "text": "Test '{0}'"
-                }
-              },
             "properties": {
                 "security-severity": convert_severity(vuln['Severity']),
                 "problem.severity": "error",
@@ -138,24 +134,15 @@ def convert_to_sarif_results(vuln, artifacts, rules):
     for param_item in vuln['LastDetectionHttpParams']:
         param_item = header.split(': ')
         params[param_item[0]] = param_item[1]
-    stack_frames = []
-    for frame in vuln['StackTrace'].split('\n  '):
-        stack_frames.append({"module": frame})
+    #stack_frames = []
+    #for frame in vuln['StackTrace'].split('\n  '):
+    #    stack_frames.append({"module": frame})
     sariff = {
         "message": {
-            "id": "default",
-            "arguments": [
-                vuln['SeekerServerLink']
-            ]
+            "text": "{0} Seeker [Link]({1}). Details in the rule".format(vuln['VulnerabilityName'], vuln['SeekerServerLink']),
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
-        #"level": "error",
-        "stacks": [
-            {
-                "frames": stack_frames,
-            }
-        ],
         "occurrenceCount": vuln['DetectionCount'],
         "hostedViewerUri": vuln['SeekerServerLink'],
         "webRequest": {
