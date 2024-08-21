@@ -143,6 +143,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         stack_frames.append({"module": frame})
     sariff = {
         "message": {
+            "text": "{0} [Link]({1})".format(vuln['VulnerabilityName'], vuln['SeekerServerLink']),
             "id": "default",
             "arguments": [
                 vuln['SeekerServerLink']
