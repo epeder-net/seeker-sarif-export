@@ -150,12 +150,6 @@ def convert_to_sarif_results(vuln, artifacts, rules):
         },
         "ruleId": vuln['CheckerKey'],
         "ruleIndex": rule_index,
-        #"level": "error",
-        "stacks": [
-            {
-                "frames": stack_frames,
-            }
-        ],
         "occurrenceCount": vuln['DetectionCount'],
         "hostedViewerUri": vuln['SeekerServerLink'],
         "webRequest": {
