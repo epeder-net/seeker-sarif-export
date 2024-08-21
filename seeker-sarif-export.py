@@ -127,7 +127,7 @@ def convert_to_sarif_results(vuln, artifacts, rules):
             },
             "messageStrings": {
                 "default": {
-                  "text": "Test '{0}"
+                  "text": "Test '{0}'"
                 }
               },
             "properties": {
