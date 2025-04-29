@@ -1,2 +1,2 @@
 requests==2.31.0
-markdownify==0.13.1
+markdownify==0.14.1
